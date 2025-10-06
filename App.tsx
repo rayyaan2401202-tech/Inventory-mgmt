@@ -59,13 +59,38 @@ const App: React.FC = () => {
       ...prevSales
     ]);
   }, []);
+  
+  const handleAddProduct = useCallback((newProduct: Omit<Product, 'id'>) => {
+    setProducts(prevProducts => [
+      { ...newProduct, id: `prod-${Date.now()}` },
+      ...prevProducts
+    ]);
+  }, []);
+
+  const handleUpdateProduct = useCallback((updatedProduct: Product) => {
+    setProducts(prevProducts =>
+      prevProducts.map(p => (p.id === updatedProduct.id ? updatedProduct : p))
+    );
+  }, []);
+
+  const handleDeleteProduct = useCallback((productId: string) => {
+    setProducts(prevProducts => prevProducts.filter(p => p.id !== productId));
+  }, []);
+
 
   const renderView = () => {
     switch (currentView) {
       case View.DASHBOARD:
         return <Dashboard products={products} sales={sales} lowStockItems={lowStockItems} />;
       case View.INVENTORY:
-        return <Inventory products={products} onSale={handleSale} userRole={currentUserRole} />;
+        return <Inventory 
+                  products={products} 
+                  onSale={handleSale} 
+                  userRole={currentUserRole} 
+                  onAddProduct={handleAddProduct}
+                  onUpdateProduct={handleUpdateProduct}
+                  onDeleteProduct={handleDeleteProduct}
+               />;
       case View.SALES:
         return <Sales sales={sales} products={products} userRole={currentUserRole}/>;
       case View.ANALYTICS:
