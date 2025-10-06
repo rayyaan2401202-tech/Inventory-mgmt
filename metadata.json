@@ -1,0 +1,5 @@
+{
+  "name": "SyncStock - Inventory Management",
+  "description": "A data management system for e-commerce inventory synchronization. It helps sync and manage inventory across multiple sales channels, automatically updates stock levels, manages SKUs, provides a real-time dashboard with alerts, and generates sales analytics with smart restocking recommendations using Gemini.",
+  "requestFramePermissions": []
+}
